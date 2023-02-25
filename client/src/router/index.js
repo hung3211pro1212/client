@@ -6,9 +6,8 @@ const routes = [
     name: 'home',
     component: DefaultLayout,
     meta: {
-      layout: 'DefaultLayout', // we add new meta layout here to use it later
+      layout: 'DefaultLayout',
     },
-    redirect: '/dashboard',
     children: [
       {
         name: 'DanhSachLopHoc',
