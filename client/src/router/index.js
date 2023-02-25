@@ -10,10 +10,6 @@ const routes = [
     meta: {
       layout: 'DefaultLayout',
     },
-<<<<<<< HEAD
-    redirect: '',
-=======
->>>>>>> 1f970035f8b7b336549bb9e98d2b2aca9f371542
     children: [
       {
         name: 'DanhSachLopHoc',
@@ -30,13 +26,19 @@ const routes = [
         path: '/quan-ly-nhan-su',
         component: () => import('../views/QuanLyGiaoVien.vue')
       },
-      {
-        name: 'Login',
-        path: '/login',
-        component: Login,
-      },
+
 
     ]
+
+
+  },
+  {
+    name: 'Login',
+    path: '/login',
+    component: Login,
+    meta: {
+      layout: 'Login',
+    },
   },
 ]
 const router = createRouter({
