@@ -8,9 +8,12 @@ const routes = [
     name: 'home',
     component: DefaultLayout,
     meta: {
-      layout: 'DefaultLayout', // we add new meta layout here to use it later
+      layout: 'DefaultLayout',
     },
+<<<<<<< HEAD
     redirect: '',
+=======
+>>>>>>> 1f970035f8b7b336549bb9e98d2b2aca9f371542
     children: [
       {
         name: 'DanhSachLopHoc',

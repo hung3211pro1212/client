@@ -12,11 +12,13 @@ import Navigation from '../components/Navigation.vue';
 
 <template>
   <div class=" ">
-
     <Navigation />
-
-    <main class="col-span-3">
-      <router-view />
+    <main>
+      <div class="relative md:ml-64 bg-blueGray-100">
+        <div class=" md:px-10 mx-auto w-full  mt-4">
+          <router-view />
+        </div>
+      </div>
     </main>
   </div>
 </template>
