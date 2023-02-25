@@ -26,13 +26,19 @@ const routes = [
         path: '/quan-ly-nhan-su',
         component: () => import('../views/QuanLyGiaoVien.vue')
       },
-      {
-        name: 'Login',
-        path: '/login',
-        component: Login,
-      },
+
 
     ]
+
+
+  },
+  {
+    name: 'Login',
+    path: '/login',
+    component: Login,
+    meta: {
+      layout: 'Login',
+    },
   },
 ]
 const router = createRouter({
