@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DefaultLayout from '../Layout/DefaultLayout.vue'
+import Login from '../Layout/Login.vue'
+
 const routes = [
   {
     path: '/',
@@ -8,7 +10,7 @@ const routes = [
     meta: {
       layout: 'DefaultLayout', // we add new meta layout here to use it later
     },
-    redirect: '/dashboard',
+    redirect: '',
     children: [
       {
         name: 'DanhSachLopHoc',
@@ -24,6 +26,11 @@ const routes = [
         name: 'QuanLyGiaoVien',
         path: '/quan-ly-nhan-su',
         component: () => import('../views/QuanLyGiaoVien.vue')
+      },
+      {
+        name: 'Login',
+        path: '/login',
+        component: Login,
       },
 
     ]

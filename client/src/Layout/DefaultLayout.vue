@@ -1,7 +1,6 @@
 <script >
 import Navigation from '../components/Navigation.vue';
-import TheWelcome from '../components/TheWelcome.vue'
-export default {
+ export default {
   name: 'DefaultLayout',
   components: {
     Navigation
