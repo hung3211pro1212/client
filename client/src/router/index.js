@@ -26,7 +26,11 @@ const routes = [
         path: '/quan-ly-nhan-su',
         component: () => import('../views/QuanLyGiaoVien.vue')
       },
-
+      {
+        name: 'profile',
+        path: '/profile',
+        component: () => import('../views/Profile.vue')
+      },
 
     ]
 
