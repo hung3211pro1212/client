@@ -26,7 +26,11 @@ const routes = [
         path: '/quan-ly-nhan-su',
         component: () => import('../views/QuanLyGiaoVien.vue')
       },
-
+      {
+        name: 'profile',
+        path: '/profile',
+        component: () => import('../views/Profile.vue')
+      },
 
     ]
 
@@ -44,11 +48,16 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
-
-
-
-
-
 })
+router.beforeEach((to, from, next) => {
+  const publicPages = ['/login', '/home'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem('user');
+  if (authRequired && !loggedIn) {
+    next('/login');
+  } else {
+    next();
+  }
+});
 
 export default router
