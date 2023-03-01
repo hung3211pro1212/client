@@ -1,16 +1,18 @@
 import axios from 'axios';
-import authHeader from './auth-header';
+
 
 const API_URL = 'http://localhost:4000/class/';
 
-class UserService {
-    getUser(username) {
-        return axios.get(API_URL + `username/${username}`, { headers: authHeader() });
+class Class {
+    getClass() {
+        return axios.get(API_URL);
     }
-
-    updateAvatar() {
-        return axios.patch(API_URL + `username/${userName}`);
+    getClassById(id) {
+        return axios.get(API_URL + `${id}`);
+    }
+    getStudentsByClass(name) {
+        return axios.get(API_URL + `students/${name}`);
     }
 }
 
-export default new UserService();
+export default new Class();
