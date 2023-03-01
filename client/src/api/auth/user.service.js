@@ -8,8 +8,16 @@ class UserService {
         return axios.get(API_URL + `username/${username}`, { headers: authHeader() });
     }
 
-    updateAvatar() {
-        return axios.patch(API_URL + `username/${userName}`);
+    updateAvatar(userName) {
+        return axios.patch(API_URL + `avatar/${userName}`, {
+            file: img.name
+        }).then(response => {
+            if (response) {
+                console.log(response.data)
+            }
+
+            return response.data;
+        })
     }
 }
 
