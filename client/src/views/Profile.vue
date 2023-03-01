@@ -110,7 +110,7 @@ export default {
 
     userService.getUser(this.$store.state.auth.user.data).then(
       res => {
-        this.user = res.data
+        this.user = res.data.user
       }, error => {
         this.user =
           (error.res && error.res.data) ||
