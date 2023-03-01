@@ -8,8 +8,10 @@
           <div class="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
             <div class="relative">
               <img
-                alt="..."
-                src="https://demos.creative-tim.com/notus-nextjs/img/team-2-800x800.jpg"
+              :src="user==null ? '.../src/assets/avatarDefault.jpg':user"
+
+alt="..."
+
                 class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]"
               />
             </div>
@@ -28,38 +30,56 @@
           </div>
           <div class="w-full lg:w-4/12 px-4 lg:order-1">
             <div class="flex justify-center py-4 lg:pt-4 pt-8">
-              <div class="mr-4 p-3 text-center">
-                <span
-                  class="text-xl font-bold block uppercase tracking-wide text-blueGray-600"
-                  >22</span
-                ><span class="text-sm text-blueGray-400">Friends</span>
-              </div>
-              <div class="mr-4 p-3 text-center">
-                <span
-                  class="text-xl font-bold block uppercase tracking-wide text-blueGray-600"
-                  >10</span
-                ><span class="text-sm text-blueGray-400">Photos</span>
-              </div>
-              <div class="lg:mr-4 p-3 text-center">
-                <span
-                  class="text-xl font-bold block uppercase tracking-wide text-blueGray-600"
-                  >89</span
-                ><span class="text-sm text-blueGray-400">Comments</span>
-              </div>
+               
+               
             </div>
           </div>
         </div>
-        <div class="text-center mt-12">
-          <h3
-            class="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2"
-          >
-            Jenna Stones
-          </h3>
+        <div class="text-center mt-1">
           <div
             class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase"
           >
             <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-           {{user}}
+            {{user}}
+
+           <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
+                    <h4 class="text-xl text-gray-900 font-bold">Jenna Stones</h4>
+                    <ul class="mt-2 text-gray-700">
+                      <li class="flex border-b py-2">
+                            <span class="font-bold w-24">ID:</span>
+                            <span class="text-gray-700">{{user.user}}</span>
+                        </li>
+                        <li class="flex border-y py-2">
+                            <span class="font-bold w-24">Username:</span>
+                            <span class="text-gray-700">{{user}}</span>
+                        </li>
+                        <li class="flex border-b py-2">
+                            <span class="font-bold w-24">Permission:</span>
+                            <span class="text-gray-700">{{user}}</span>
+                        </li>
+                        <li class="flex border-b py-2">
+                            <span class="font-bold w-24">SEX:</span>
+                            <span class="text-gray-700">{{user}}</span>
+                        </li>
+                        <li class="flex border-b py-2">
+                            <span class="font-bold w-24">Date:</span>
+                            <span class="text-gray-700">{{user}}</span>
+                        </li>
+                        <li class="flex border-b py-2">
+                            <span class="font-bold w-24">Address:</span>
+                            <span class="text-gray-700">{{user}}</span>
+                        </li>
+                        <li class="flex border-b py-2">
+                            <span class="font-bold w-24">Firstname:</span>
+                            <span class="text-gray-700">N{{user }}</span>
+                        </li>
+                        <li class="flex border-b py-2">
+                            <span class="font-bold w-24">Lastname:</span>
+                            <span class="text-gray-700">{{user}}</span>
+                        </li>
+                         
+                    </ul>
+                </div>
           </div>
           <div class="mb-2 text-blueGray-600 mt-10">
             <i class="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i
@@ -102,15 +122,14 @@ export default {
   },
 
   computed: {
-    currentUser() {
-      return;
-    }
   },
   mounted() {
 
     userService.getUser(this.$store.state.auth.user.data).then(
       res => {
-        this.user = res.data.user
+        this.users = res.data.user
+        console.log(this.users);
+
       }, error => {
         this.user =
           (error.res && error.res.data) ||
