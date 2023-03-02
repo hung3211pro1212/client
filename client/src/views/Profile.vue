@@ -105,6 +105,16 @@ alt="..."
               >
             </div>
           </div>
+          <div>
+            <div >
+             
+                <input ref="fileInput" type="file" name="file" id=""  accept="image/png, image/jpeg" >
+                 <button @click="onUpLoad">submit</button>
+           
+        
+            </div>
+         
+          </div>
         </div>
       </div>
     </div>
@@ -117,16 +127,31 @@ export default {
   name: 'ProFile',
   data() {
     return {
-      user: []
+      user: [],
+      fileInput: null
     }
   },
 
   computed: {
   },
+  methods: {
+
+
+    onUpLoad() {
+      console.log(this.$refs.fileInput.value)
+      console.log()
+      const fd = new FormData()
+      fd.append('file', this.$refs.fileInput.files[0])
+      console.log(fd.getAll('file'))
+      // userService.updateAvatar(this.$store.state.auth.user, this.$refs.fileInput.files[0])
+
+    }
+  },
   mounted() {
 
-    userService.getUser(this.$store.state.auth.user.data).then(
+    userService.getUser(this.$store.state.auth.user).then(
       res => {
+
         this.users = res.data.user
         console.log(this.users);
 
