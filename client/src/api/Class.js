@@ -8,9 +8,9 @@ class UserService {
         return axios.get(API_URL + `username/${username}`, { headers: authHeader() });
     }
 
-    updateAvatar() {
+    updateAvatar(userName) {
         return axios.patch(API_URL + `username/${userName}`);
     }
 }
 
-export default new UserService();
+export default new UserService(); 
