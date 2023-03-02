@@ -20,15 +20,16 @@
               <button
                 class="bg-[rgba(51,65,85,1)] active:bg-blueGray-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                 type="button"
+                @click="this.isShow = true"
               >
-                Connect
+              Đổi Mật Khâu
               </button>
             </div>
           </div>
           <div class="w-full lg:w-4/12 px-4 lg:order-1">
             <div class="flex justify-center py-4 lg:pt-4 pt-8">
-               
-               
+              
+            
             </div>
           </div>
         </div>
@@ -39,91 +40,69 @@
             <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
  
            <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
-                    <h4 class="text-xl text-gray-900 font-bold">Jenna Stones</h4>
+                    <h4 class="text-xl text-gray-900 font-bold">{{user.fullName}}</h4>
                     <ul class="mt-2 text-gray-700">
-                      <li class="flex border-b py-2">
-                            <span class="font-bold w-24">Username:</span>
+                      <li class="flex border-b py-2 w-full">
+                            <span class="font-bold  w-44 text-left ">Mã Học Sinh:</span>
                             <span class="text-gray-700">{{user.userName}}</span>
                         </li>
-                        <li class="flex border-y py-2">
-                            <span class="font-bold w-24">Email:</span>
+                        <li class="flex border-y py-2 w-full">
+                            <span class="font-bold  w-44 text-left ">Email:</span>
                             <span class="text-gray-700">{{user.email}}</span>
                         </li>
-                        <li class="flex border-b py-2">
-                            <span class="font-bold w-24">Giới tính:</span>
+                        <li class="flex border-b py-2 w-full">
+                            <span class="font-bold w-44 text-left ">Giới tính:</span>
                             <span class="text-gray-700">{{user.sex}}</span>
                         </li>
-                        <li class="flex border-b py-2">
+                        <li class="flex border-b py-2 w-60 text-left w-full">
                             <span class="font-bold w-24">Ngày sinh:</span>
                             <span class="text-gray-700">{{user.date}}</span>
                         </li>
-                        <li class="flex border-b py-2">
+                        <li class="flex border-b py-2 w-60 text-left w-full">
                             <span class="font-bold w-24">Địa chỉ:</span>
                             <span class="text-gray-700">{{user.Address}}</span>
                         </li>
-                        <li class="flex border-b py-2">
-                            <span class="font-bold w-24">Số điện thoại:</span>
+                        <li class="flex border-b py-2 w-60 text-left w-full">
+                            <span class="font-bold w-44">Số điện thoại:</span>
                             <span class="text-gray-700">{{user.numberPhone}}</span>
                         </li>
-                        <li class="flex border-b py-2">
-                            <span class="font-bold w-24">Fullname:</span>
-                            <span class="text-gray-700">{{user.firstName }} {{user.lastName }} </span>
-                        </li>
-                      
-                        <li class="flex border-b py-2">
-                            <span class="font-bold w-24">Lớp:</span>
+                        <li class="flex border-b py-2 w-60 text-left w-full">
+                            <span class="font-bold w-44">Lớp:</span>
                             <span class="text-gray-700">{{user.className}}</span>
                         </li>
                          
                     </ul>
                 </div>
           </div>
-          <div class="mb-2 text-blueGray-600 mt-10">
-            <i class="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i
-            >Solution Manager - Creative Tim Officer
-          </div>
-          <div class="mb-2 text-blueGray-600">
-            <i class="fas fa-university mr-2 text-lg text-blueGray-400"></i
-            >University of Computer Science
-          </div>
+          
         </div>
         <div class="mt-10 py-10 border-t border-blueGray-200 text-center">
           <div class="flex flex-wrap justify-center">
             <div class="w-full lg:w-9/12 px-4">
-              <p class="mb-4 text-lg leading-relaxed text-blueGray-700">
-                An artist of considerable range, Jenna the name taken by
-                Melbourne-raised, Brooklyn-based Nick Murphy writes, performs
-                and records all of his own music, giving it a warm, intimate
-                feel with a solid groove structure. An artist of considerable
-                range.
-              </p>
-              <a href="#pablo" class="font-normal text-lightBlue-500"
-                >Show more</a
-              >
             </div>
           </div>
           <div>
-            <div >
-             
-                <input ref="fileInput" type="file" name="file" id=""  accept="image/png, image/jpeg" >
-                 <button @click="onUpLoad">submit</button>
-           
-        
-            </div>
-         
           </div>
         </div>
       </div>
     </div>
   </div>
+  <div>
+    <FromChangePassword @close="closeToggle" :isShow="this.isShow" :userName="this.$store.state.auth.user"/>
+  </div>
+
 </template>
 <script>
 import userService from '../api/auth/user.service';
-
+import FromChangePassword from '../components/FormChangePassword.vue';
 export default {
   name: 'ProFile',
+  components: {
+    FromChangePassword,
+  },
   data() {
     return {
+      isShow: false,
       user: [],
       fileInput: null
     }
@@ -132,7 +111,9 @@ export default {
   computed: {
   },
   methods: {
-
+    closeToggle() {
+      this.isShow = false
+    },
 
     onUpLoad() {
       console.log(this.$refs.fileInput.value)
@@ -148,14 +129,8 @@ export default {
 
     userService.getUser(this.$store.state.auth.user).then(
       res => {
-<<<<<<< HEAD
         this.user = res.data.user
         console.log(this.user);
-=======
-
-        this.users = res.data.user
-        console.log(this.users);
->>>>>>> 07c50f1ce3d1b390607c4f490893dfc886f13cdd
 
       }, error => {
         this.user =

@@ -22,6 +22,13 @@ class UserService {
             return response.data;
         })
     }
+    changePassword(userName, data) {
+        console.log(data)
+        return axios.put(API_URL + `changePassword/${userName}`, {
+            oldPassword: data.oldPassword,
+            newPassword: data.newPassword
+        }, { headers: authHeader() });
+    }
 }
 
 export default new UserService();
