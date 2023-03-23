@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DefaultLayout from '../Layout/DefaultLayout.vue'
 import Login from '../Layout/Login.vue'
+import store from "@/store";
 
 const routes = [
   {
@@ -13,22 +14,73 @@ const routes = [
     children: [
       {
         name: 'DanhSachLopHoc',
-        path: '/danh-sach-lop-hoc',
-        component: () => import('../views/DanhSachLopHoc.vue')
+        path: '/quan-ly-lop-hoc',
+        component: () => import('../views/DanhSachLopHoc.vue'),
+        beforeEnter(to,from,next){
+          if(store.state.auth.user.role === 'admin'){
+            next()
+            console.log(store.state.auth.user.role)
+          }else {
+            next(false)
+          }
+        }
       },
       {
         name: 'QuanLyHocSinh',
         path: '/quan-ly-hoc-sinh',
-        component: () => import('../views/QuanLyHocSinh.vue')
+        component: () => import('../views/QuanLyHocSinh.vue'),
+        beforeEnter(to,from,next){
+          if(store.state.auth.user.role === 'admin'){
+            next()
+            console.log(store.state.auth.user.role)
+          }else {
+            next(false)
+          }
+        }
       },
       {
         name: 'QuanLyGiaoVien',
-        path: '/quan-ly-nhan-su',
-        component: () => import('../views/QuanLyGiaoVien.vue')
+        path: '/quan-ly-giao-vien',
+        component: () => import('../views/QuanLyGiaoVien.vue'),
+        beforeEnter(to,from,next){
+          if(store.state.auth.user.role === 'admin'){
+            next()
+            console.log(store.state.auth.user.role)
+          }else {
+            next(false)
+          }
+        }
+
+      },
+      {
+        name: 'BoMonGiangDay',
+        path: '/bo-mon-giang-day',
+        component: () => import('../views/QuanLyBoMon.vue'),
+        beforeEnter(to,from,next){
+          if(store.state.auth.user.role === 'admin'){
+            next()
+            console.log(store.state.auth.user.role)
+          }else {
+            next(false)
+          }
+        }
+      },
+      {
+        name: 'QuanLyMonHoc',
+        path: '/quan-ly-mon-hoc',
+        component: () => import('../views/QuanLyMonHoc.vue'),
+        beforeEnter(to,from,next){
+          if(store.state.auth.user.role === 'admin'){
+            next()
+            console.log(store.state.auth.user.role)
+          }else {
+            next(false)
+          }
+        }
       },
       {
         name: 'profile',
-        path: '/profile',
+        path: '',
         component: () => import('../views/Profile.vue')
       },
 
@@ -51,6 +103,9 @@ const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/home'];
+  const requireRole = to.meta.requireRole;
+  const userRole = store.state.auth.user.role;
+  console.log('userRole',userRole)
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
   if (authRequired && !loggedIn) {

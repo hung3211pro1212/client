@@ -18,7 +18,42 @@ class AuthService {
                 return response.data;
             });
     }
+    signUpStudent(user) {
+        return axios
+            .post(API_URL + 'signup/student', {
+                userName: user.username,
+                password: user.password,
+                fullName: user.fullName,
+                sex: user.sex,
+                className: user.className,
+                numberPhone: user.numberPhone,
+                email: user.email,
+                Date: user.date,
+                Address: user.address
+            })
+            .then(response => {
 
+                return response.data;
+            });
+    }
+    signUpTeacher(user) {
+        return axios
+            .post(API_URL + 'signup/teacher', {
+                userName: user.username,
+                password: user.password,
+                fullName: user.fullName,
+                sex: user.sex,
+                subjectTeacherName: user.subjectTecher,
+                numberPhone: user.numberPhone,
+                email: user.email,
+                Date: user.date,
+                Address: user.address
+            })
+            .then(response => {
+
+                return response.data;
+            });
+    }
     logout() {
         localStorage.removeItem('user');
     }

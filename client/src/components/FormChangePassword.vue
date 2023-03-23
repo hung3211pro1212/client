@@ -20,7 +20,6 @@ export default {
   },
   methods: {
     getPassWord() {
-
       if (this.data.newPassword != this.data.oldPassword) {
         this.error = true
 

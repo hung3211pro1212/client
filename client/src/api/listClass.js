@@ -7,11 +7,20 @@ class ListClass {
     getAll() {
         return axios.get(API_URL);
     }
+
+
     getListClassById(id) {
         return axios.get(API_URL + `${id}`);
     }
     getListClassByName(name) {
         return axios.get(API_URL + `listclass/${name}`);
+    }
+    filter(khoiName,className) {
+        console.log(className);
+        return axios.post(API_URL + `filter`, {
+            khoiName: khoiName,
+            className: className,
+        });
     }
 }
 

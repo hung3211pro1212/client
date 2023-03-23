@@ -1,6 +1,6 @@
 <script >
 import Navigation from '../components/Navigation.vue';
- export default {
+export default {
   name: 'DefaultLayout',
   components: {
     Navigation
@@ -14,7 +14,7 @@ import Navigation from '../components/Navigation.vue';
   <div class=" ">
     <Navigation />
     <main>
-      <div class="relative md:ml-64 bg-blueGray-100">
+      <div class="relative md:ml-64 bg-[#FFFBEB]">
         <div class=" md:px-10 mx-auto w-full  mt-4">
           <router-view />
         </div>
