@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import DefaultLayout from '../Layout/DefaultLayout.vue'
 import Login from '../Layout/Login.vue'
 import store from "@/store";
@@ -104,14 +104,15 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/home'];
   const requireRole = to.meta.requireRole;
-  const userRole = store.state.auth.user.role;
-  console.log('userRole',userRole)
+  let userRole;
+  console.log('userRole', userRole)
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
   if (authRequired && !loggedIn) {
     next('/login');
   } else {
     next();
+    userRole = store.state.auth.user.role;
   }
 });
 
