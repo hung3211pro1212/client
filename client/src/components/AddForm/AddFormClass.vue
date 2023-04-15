@@ -35,21 +35,10 @@
               </div>
             </div>
             <div class="flex justify-end mt-6 gap-6">
-              <button :disabled="loading" class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-red-500 rounded-md hover:bg-red-700 focus:outline-none focus:bg-gray-600" @click="$emit('close')">Đóng</button>
+              <div  class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-red-500 rounded-md hover:bg-red-700 focus:outline-none focus:bg-gray-600" @click="$emit('close')">Đóng</div>
               <button class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-green-500 rounded-md hover:bg-green-700 focus:outline-none focus:bg-gray-600" >Save</button>
             </div>
           </Form>
-        </div>
-        <div
-            class="w-[100px] absolute left-1/2 right-1/2 top-[50%]"
-            style="transform: translate(-50%, -50%)"
-            v-if="this.succees"
-        >
-          <img src="../../assets/Success-PNG-Image.png"  />
-          <p class="text-center mt-4 text-green-500"> Đổi Mật Khẩu Thành Công</p>
-          <button @click="$emit('close')" class="border-[1px] border-green-500 py-3 px-5 mt-4 rounded-[50px] hover:bg-green-500 hover:text-white">
-            Quay lại
-          </button>
         </div>
         <div>
         </div>

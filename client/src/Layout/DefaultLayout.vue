@@ -14,8 +14,8 @@ export default {
   <div class=" ">
     <Navigation />
     <main>
-      <div class="relative md:ml-64 bg-[#FFFBEB]">
-        <div class=" md:px-10 mx-auto w-full  mt-4">
+      <div class="relative md:ml-64 ">
+        <div class=" md:px-[25px] mx-auto w-full  mt-4">
           <router-view />
         </div>
       </div>

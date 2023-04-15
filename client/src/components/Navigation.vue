@@ -1,320 +1,138 @@
-<template lang="">
-   <nav
-    class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
-  >
-    <div
-      class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto"
-    >
-      <!-- Toggler -->
-      <button
-        class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
-        type="button"
-        v-on:click="toggleCollapseShow('bg-white m-2 py-3 px-6')"
+<template>
+    <div class="sidebar">
+      <h5 class="mb-2">Default colors</h5>
+      <el-menu
+          default-active
+          class="el-menu-vertical-demo"
+          @open="handleOpen"
+          @close="handleClose"
+          router
       >
-        <i class="fas fa-bars"></i>
-      </button>
-      <!-- Brand -->
-      <router-link
-        class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-        to="/"
-      >
-        Vue Notus
-      </router-link>
-      <!-- User -->
-      <ul class="md:hidden items-center flex flex-wrap list-none">
-        <li class="inline-block relative">
-          <notification-dropdown />
-        </li>
-        <li class="inline-block relative">
-          <user-dropdown />
-        </li>
-      </ul>
-      <!-- Collapse -->
-      <div
-        class="md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded"
-        v-bind:class="collapseShow"
-      >
-        <!-- Collapse header -->
-        <div
-          class="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-blueGray-200"
-        >
-          <div class="flex flex-wrap">
-            <div class="w-6/12">
-              <router-link
-                class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-                to="/"
-              >
-                Vue Notus
-              </router-link>
-            </div>
-            <div class="w-6/12 flex justify-end">
-              <button
-                type="button"
-                class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
-                v-on:click="toggleCollapseShow('hidden')"
-              >
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- Form -->
-        <form class="mt-6 mb-4 md:hidden">
-          <div class="mb-3 pt-0">
-            <input
-              type="text"
-              placeholder="Search"
-              class="border-0 px-3 py-2 h-12 border border-solid border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
-            />
-          </div>
-        </form>
+        <el-sub-menu index="1" v-if="roles =='admin' ">
+          <template #title>
+            <el-icon><Suitcase /></el-icon>
+            <span>Giáo Viên</span>
+          </template>
+          <el-menu-item-group index="1" >
+            <el-menu-item index="/bo-mon-giang-day" @click="setActiveLink('/bo-mon-giang-day')" :class="activeLink === '/bo-mon-giang-day' ? 'active' : ''">
+              <el-icon :size="10"><SemiSelect  /></el-icon> Danh Sách Bộ Môn
+            </el-menu-item>
+            <el-menu-item index="/quan-ly-giao-vien" @click="setActiveLink('/quan-ly-giao-vien')" :class="activeLink === '/quan-ly-giao-vien' ? 'active' : ''">
+              <el-icon :size="10"><SemiSelect  /></el-icon>   Danh Sách Giáo viên
+            </el-menu-item>
+          </el-menu-item-group>
+        </el-sub-menu>
+        <el-sub-menu index="2" v-if="roles ==='admin' ">
+          <template #title>
+            <el-icon><Collection /></el-icon>
+            <span>Học Sinh</span>
+          </template>
+          <el-menu-item-group >
+            <el-menu-item index="/quan-ly-lop-hoc" @click="setActiveLink('/quan-ly-lop-hoc')" :class="activeLink === '/quan-ly-lop-hoc' ? 'active' : ''">
+              <el-icon :size="10"><SemiSelect  /></el-icon> Danh Sách Lớp Học
+            </el-menu-item>
+            <el-menu-item index="/quan-ly-hoc-sinh"  @click="setActiveLink('/quan-ly-hoc-sinh')" :class="activeLink === '/quan-ly-hoc-sinh' ? 'active' : ''">
+              <el-icon :size="10"><SemiSelect  /></el-icon>Danh Sách Học Sinh
+            </el-menu-item>
+            <el-menu-item index="/quan-ly-mon-hoc" @click="setActiveLink('/quan-ly-mon-hoc')" :class="activeLink === '/quan-ly-mon-hoc' ? 'active' : ''">
+              <el-icon :size="10"><SemiSelect  /></el-icon> Quản Lý Môn Học
+            </el-menu-item>
+            <el-menu-item index="/nam-hoc" @click="setActiveLink('/nam-hoc')" :class="activeLink === '/nam-hoc' ? 'active' : ''">
+              <el-icon :size="10"><SemiSelect  /></el-icon> Năm học
+            </el-menu-item>
+            <el-menu-item index="/thoi-khoa-bieu" @click="setActiveLink('/thoi-khoa-bieu')" :class="activeLink === '/thoi-khoa-bieu' ? 'active' : ''">
+              <el-icon :size="10"><SemiSelect  /></el-icon> Thời Khóa Biểu
+            </el-menu-item>
+          </el-menu-item-group>
+        </el-sub-menu>
 
-        <!-- Divider -->
-        <hr class="my-4 md:min-w-full"  v-if="this.role === 'admin'" />
-        <!-- Heading -->
-        <h6
-          class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
-           v-if="this.role === 'admin'"
-        >
-          Giáo Viên
-        </h6>
-        <!-- Navigation -->
+        <el-menu-item  index="/thoi-khoa-bieu/hs" @click="setActiveLink('/thoi-khoa-bieu/hs')" :class="activeLink === '/quan-ly-lop-hoc' ? 'active' : ''" v-if="roles == 'hs  '">
 
-        <ul class="md:flex-col md:min-w-full flex flex-col list-none"  v-if="this.role === 'admin'">
-          <li class="items-center">
-            <router-link
-              to="/quan-ly-giao-vien"
-              v-slot="{ href, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="navigate"
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-emerald-500 hover:text-emerald-600'
-                    : 'text-blueGray-700 hover:text-blueGray-500',
-                ]"
-              >
-                <i
-                  class="fas fa-tv mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
-                ></i>
-                Danh Sách Giáo Viên
-              </a>
-            </router-link>
-          </li>
+            <el-icon :size="10"><SemiSelect  /></el-icon> Thời Khóa Biểu
 
-          <li class="items-center">
-            <router-link
-              to="/bo-mon-giang-day"
-              v-slot="{ href, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="navigate"
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-emerald-500 hover:text-emerald-600'
-                    : 'text-blueGray-700 hover:text-blueGray-500',
-                ]"
-              >
-                <i
-                  class="fas fa-tools mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
-                ></i>
-                Bộ Môn Giảng Dạy
-              </a>
-            </router-link>
-          </li>
-
-
-        </ul>
-
-        <!-- Divider -->
-        <hr class="my-4 md:min-w-full"  v-if="this.role === 'admin'" />
-        <!-- Heading -->
-        <h6
-          v-if="this.role === 'admin'"
-          class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
-        >
-         Lớp Học
-        </h6>
-        <!-- Navigation -->
-
-        <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4"  v-if="this.role === 'admin'">
-          <li class="items-center">
-             <router-link
-              to="/quan-ly-lop-hoc"
-              v-slot="{ href, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="navigate"
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-emerald-500 hover:text-emerald-600'
-                    : 'text-blueGray-700 hover:text-blueGray-500',
-                ]"
-              >
-                <i
-                  class="fas fa-tools mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
-                ></i>
-                Danh Sách Lớp Học
-              </a>
-            </router-link>
-          </li>
-             <li class="items-center">
-            <router-link
-              class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/auth/login"
-            >
-              <i class="fas fa-fingerprint text-blueGray-300 mr-2 text-sm"></i>
-             Thời Khóa Biểu
-            </router-link>
-          </li>
-        </ul>
-       <hr class="my-4 md:min-w-full" v-if="this.role === 'admin'" />
-        <!-- Heading -->
-        <h6
-          v-if="this.role === 'admin'"
-          class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
-        >
-        Môn học
-        </h6>
-        <!-- Navigation -->
-        <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4"  v-if="this.role === 'admin'">
-          <li class="items-center">
-             <router-link
-              to="/quan-ly-mon-hoc"
-              v-slot="{ href, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="navigate"
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-emerald-500 hover:text-emerald-600'
-                    : 'text-blueGray-700 hover:text-blueGray-500',
-                ]"
-              >
-                <i
-                  class="fas fa-tools mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
-                ></i>
-              Danh Sách Môn học
-              </a>
-            </router-link>
-          </li>
-<!--             <li class="items-center">-->
-<!--            <router-link-->
-<!--              class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"-->
-<!--              to="/auth/login"-->
-<!--            >-->
-<!--              <i class="fas fa-fingerprint text-blueGray-300 mr-2 text-sm"></i>-->
-<!--             Thời Khóa Biểu-->
-<!--            </router-link>-->
-<!--          </li>-->
-        </ul>
-        <!-- Divider -->
-        <hr class="my-4 md:min-w-full"  v-if="this.role === 'admin'"/>
-        <!-- Heading -->
-        <h6
-          class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
-           v-if="this.role === 'admin'"
-        >
-          Học Sinh
-        </h6>
-        <!-- Navigation -->
-
-        <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4"  v-if="this.role === 'admin'">
-          <li class="items-center">
-           <router-link
-              to="/quan-ly-hoc-sinh"
-              v-slot="{ href, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="navigate"
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-emerald-500 hover:text-emerald-600'
-                    : 'text-blueGray-700 hover:text-blueGray-500',
-                ]"
-              >
-                <i
-                  class="fas fa-tools mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-blueGray-300']"
-                ></i>
-                Danh Sách Học Sinh
-              </a>
-            </router-link>
-          </li>
-
-          <li class="items-center">
-            <router-link
-              class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/profile"
-            >
-              <i class="fas fa-user-circle text-blueGray-300 mr-2 text-sm"></i>
-              Quản Lý Điểm
-            </router-link>
-          </li>
-        </ul>
-
-        <!-- Divider -->
-        <hr class="my-4 md:min-w-full" />
-        <!-- Heading -->
-
-        <!-- Navigation -->
+        </el-menu-item>
+        <el-menu-item index="4">
+          <el-icon><setting /></el-icon>
+          <span>Navigator Four</span>
+        </el-menu-item>
+      </el-menu>
+    </div>
+  <div>
+    <el-header style="text-align: right; font-size: 12px">
+      <div class="toolbar">
+        <el-dropdown>
+          <el-avatar :size="40" :src="circleUrl" class="mt-[13px]"/>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>Thông Tin Tài Khoản</el-dropdown-item>
+              <el-dropdown-item>Cài đặt </el-dropdown-item>
+              <el-dropdown-item @click="logOut">Đăng Xuất </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
 
       </div>
-    </div>
-  </nav>
-</template>
-<script>
-import {axiosinstance} from "../api/api";
+    </el-header>
+  </div>
 
+  </template>
+
+
+<script>
+import Menu from 'primevue/menu';
+import Sidebar from 'primevue/sidebar';
+import  PanelMenu from 'primevue/panelmenu'
+import Menubar from 'primevue/menubar';
+import TieredMenu from 'primevue/tieredmenu'
+import { BookOpenIcon } from "@vue-hero-icons/outline"
 export default {
   name: "Navigation",
-  // const params = 
+  components: {
+    BookOpenIcon
+  },
+  created() {
+    this.setActiveLink(window.location.pathname);
+    this.roles =  this.$store.state.auth.user.role;
+  },
   data() {
-
     return {
-      menus: [],
-      errors: [],
-      role: ''
+      activeLink: '',
+      roles:'',
     };
   },
-  mounted() {
-    this.getMenu();
-    this.role =this.$store.state.auth.user.role
-    console.log(this.role)
-  },
-  watch: {
-
-  },
   methods: {
-
-    getMenu() {
-      axiosinstance.get("menu").then((res) => {
-        console.log(res.data);
-        this.menus = res.data;
-      });
+    setActiveLink(link) {
+      this.activeLink = link;
     },
     logOut() {
-      this.$store.dispatch('auth/logout');
-      this.$router.push('/login');
+      localStorage.clear();
+      this.$router.push("/");
     }
-
-  },
+  }
 };
 </script>
-<style lang="css">
+<style scoped>
+.sidebar {
+  width: 249px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+  overflow-y: auto;
+  box-shadow: 0 2px 4px rgba(15,34,58,.12);
+  z-index: 999;
+}
+.active {
+  background-color: #409EFF !important;
+  color: #FFFFFF !important;
+}
+.el-header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(15,34,58,.12);
+  color: #333;
+  line-height: 60px;
+  height: 70px;
 
+}
 </style>

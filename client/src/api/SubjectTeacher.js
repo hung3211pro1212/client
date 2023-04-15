@@ -19,6 +19,12 @@ class SubjectTeacherService {
     filter(name) {
         return axios.post(API_URL + '/filter', {name: name});
     }
+    edit(id,data) {
+        return axios.patch(API_URL+`/${id}`,data);
+    }
+    delete(id) {
+        return axios.delete(API_URL+`/${id}`);
+    }
 }
 
 export default new SubjectTeacherService();

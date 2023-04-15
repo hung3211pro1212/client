@@ -79,6 +79,43 @@ const routes = [
         }
       },
       {
+        name: 'ThoiKhoaBieu',
+        path: '/thoi-khoa-bieu',
+        component: () => import('../views/ThoiKhoaBieu.vue'),
+        beforeEnter(to,from,next){
+          if(store.state.auth.user.role === 'admin'){
+            next()
+            console.log(store.state.auth.user.role)
+          }else {
+            next(false)
+          }
+        }
+      } , {
+        name: 'Year',
+        path: '/nam-hoc',
+        component: () => import('../views/Year.vue'),
+        beforeEnter(to,from,next){
+          if(store.state.auth.user.role === 'admin'){
+            next()
+            console.log(store.state.auth.user.role)
+          }else {
+            next(false)
+          }
+        }
+      },{
+        name: 'ThoiKhoaBieuHs',
+        path: '/thoi-khoa-bieu/hs',
+        component: () => import('../views/ThoiKhoaBieuHs.vue'),
+        beforeEnter(to,from,next){
+          if(store.state.auth.user.role === 'hs'){
+            next()
+            console.log(store.state.auth.user.role)
+          }else {
+            next(false)
+          }
+        }
+      },
+      {
         name: 'profile',
         path: '',
         component: () => import('../views/Profile.vue')

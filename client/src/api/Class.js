@@ -11,12 +11,16 @@ class ClassService {
         return axios.get(API_URL, {params: {page}});
     }
     createClass(data) {
-        console.log(data.khoi)
-      const  name =data.name.toUpperCase();
+        console.log()
+
         return axios.post(API_URL, {
-            name: name,
-            Khoi: data.khoi,
+            name: data.name,
+            Khoi: data.Khoi,
         });
+    }
+
+    getClassByList(name) {
+        return axios.get(API_URL + 'Khoi/' + `${name}`);
     }
 
     getClassById(id) {
@@ -27,14 +31,24 @@ class ClassService {
         return axios.get(API_URL + `students/${name}`);
     }
 
-    filterClass(name) {
+    filterClass(name, page) {
         console.log(name);
         return axios.post(API_URL + `filter`, {
             khoiName: name,
-        });
+        }, {params: {page}});
     }
-    classPagination(page){
-        return axios.get(API_URL + `page/${page}`);
+
+    classPagination(page) {
+        return axios.get(API_URL, {params: page});
+    }
+
+    edit(id, data) {
+        console.log(id)
+        return axios.patch(API_URL + `${id}`, data);
+    }
+
+    delete(id) {
+        return axios.delete(API_URL + `${id}`);
     }
 }
 

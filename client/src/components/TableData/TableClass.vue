@@ -3,7 +3,6 @@
   <div class="flex flex-col w-full">
     <div class=" sm:mx-0.5 lg:mx-0.5 w-full">
       <div class="py-2 inline-block w-full ">
-        {{}}
         <div class=" w-full">
           <table class="text-left w-full">
             <thead class="bg-green-500 flex text-white w-full">
@@ -44,13 +43,12 @@
           <div class="flex justify-center mt-10">
             <vue-awesome-paginate
                 v-model="currentPage"
-                :items-per-page="5"
-                :max-pages-shown="5"
+                :items-per-page="10"
+                :max-pages-shown="10"
                 :on-click="onClickHandler"
-                :total-items="listClass.length"
+                :total-items="40"
             />
           </div>
-
         </div>
       </div>
     </div>
@@ -79,11 +77,14 @@ export default {
   },
   data() {
     const currentPage = ref(1);
+    const totalItems = this.listClass.length;
+
     return {
       width: this.dataHeader.length === 4 ? 'w-1/4' : 'w-1/3',
       bgGreen500: 'bg-green-400 text-white',
       bgWhite: 'bg-white text-green-500',
-      currentPage
+      currentPage,
+      totalItems
     }
   },
   methods: {

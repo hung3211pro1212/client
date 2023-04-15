@@ -29,7 +29,7 @@
           <div class="w-full lg:w-4/12 px-4 lg:order-1">
             <div class="flex justify-center py-4 lg:pt-4 pt-8">
               
-            
+
             </div>
           </div>
         </div>
@@ -40,23 +40,23 @@
             <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
  
            <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
-                    <h4 class="text-xl text-gray-900 font-bold">{{user.fullName}}</h4>
+                    <h4 class="text-xl text-gray-900 font-bold">{{this.user.fullName}}</h4>
                     <ul class="mt-2 text-gray-700">
                       <li class="flex border-b py-2 w-full">
                             <span class="font-bold  w-44 text-left ">Mã Học Sinh:</span>
-                            <span class="text-gray-700">{{user.userName}}</span>
+                            <span class="text-gray-700">{{this.user.userName}}</span>
                         </li>
                         <li class="flex border-y py-2 w-full">
                             <span class="font-bold  w-44 text-left ">Email:</span>
-                            <span class="text-gray-700">{{user.email}}</span>
+                            <span class="text-gray-700">{{this.user.email}}</span>
                         </li>
                         <li class="flex border-b py-2 w-full">
                             <span class="font-bold w-44 text-left ">Giới tính:</span>
-                            <span class="text-gray-700">{{user.sex}}</span>
+                            <span class="text-gray-700">{{this.user.sex}}</span>
                         </li>
                         <li class="flex border-b py-2 w-60 text-left w-full">
                             <span class="font-bold w-24">Ngày sinh:</span>
-                            <span class="text-gray-700">{{user.date}}</span>
+                            <span class="text-gray-700">{{this.user.date}}</span>
                         </li>
                         <li class="flex border-b py-2 w-60 text-left w-full">
                             <span class="font-bold w-24">Địa chỉ:</span>
@@ -64,11 +64,11 @@
                         </li>
                         <li class="flex border-b py-2 w-60 text-left w-full">
                             <span class="font-bold w-44">Số điện thoại:</span>
-                            <span class="text-gray-700">{{user.numberPhone}}</span>
+                            <span class="text-gray-700">{{this.user.numberPhone}}</span>
                         </li>
                         <li class="flex border-b py-2 w-60 text-left w-full">
                             <span class="font-bold w-44">Lớp:</span>
-                            <span class="text-gray-700">{{user.className}}</span>
+                            <span class="text-gray-700">{{this.user.className}}</span>
                         </li>
                          
                     </ul>
@@ -138,7 +138,6 @@ export default {
           error.toString();
       }
     )
-
 
   }
 };

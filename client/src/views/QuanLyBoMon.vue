@@ -1,142 +1,272 @@
 <template>
-  <div class="p-8 bg-white rounded-3xl">
-    <h1 class="text-3xl font-bold mb-10">Danh sách bộ môn</h1>
+  <div class="">
+    <h1 class="text-3xl font-bold mb-10">Quản Lý bộ môn</h1>
     <div class="flex justify-between mb-5">
-      <div class="flex gap-5">
-        <div class="flex flex-col">
-          <label
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              for="khoiName"
-          >Chọn bộ môn</label
-          >
-          <select
-
-              id="listClass"
-              class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              name="khoiName"
-              @change="changeValue"
-          >
-            <option selected value="">Chọn bộ môn</option>
-            <option
-                v-for="(item, index) in this.listSubject"
-                :key="item.id"
-                :value="item.name"
-            >
-              {{ item.name }}
-            </option>
-          </select>
-        </div>
-
-      </div>
-      <div class="flex gap-6">
-
-        <div class="mt-[26px] justify-end">
-          <button
-              class="hover:bg-blue-500 hover:text-white border-[1px] border-blue-400 px-5 py-3 rounded-3xl"
-              @click="this.isShow = true"
-          >
-            Thêm học bộ môn
-          </button>
-        </div>
-      </div>
     </div>
-    <TableClass :dataHeader="this.HeaderData" :listClass="this.listSubject" typeAccount="gv" :classes="this.subjectTeacher"  @onClickHandler="onClickHandler" />
-    <AddFromSubjectTeacher
-        :isOpen="this.isShow"
-        @close="closeToggle"
-        @success="addSubject"
-    />
+    <div class="">
 
-    <FormEdit
-        :dataEditor="this.dataEditor"
-        :isOpen="this.isEditor"
-        :listClass="this.listClass"
-        @close="closeToggle"
-    />
-    <ModalDelete
-        :isActionDelete="this.isDeleteAction"
-        @close="closeToggle"
-        @delete="DeleteAction"
-    />
-    <notifications
-        class="mt-3"
-        :duration="2000"
-        :width="400"
-        animation-type="velocity"
-        position="top right" />
+      <div class="bg-white p-4 ">
+        <div class="flex justify-between">
+          <h1>Danh Sách Bộ Môn</h1>
+          <el-button type="primary" @click="dialogVisible = true">
+            <el-icon>
+              <Plus/>
+            </el-icon>
+            Thêm Bộ Môn
+          </el-button>
+        </div>
+
+        <el-table :data="this.listSubject" :row-key="getRowKey" border caption="Table Title"
+                  class-name="mt-4" style="width: 100%;border-collapse: collapse;">
+          <el-table-column type="index" width="50"/>
+          <el-table-column label="Tên Bộ Môn" prop="name"/>
+          <el-table-column label="Sô Giáo Viên" prop="_count.teachers"/>
+          <el-table-column align="right" label="Chức Năng">
+            <template #default="scope">
+              <el-button type="primary" @click="handleEdit(scope.$index, scope.row)"
+              >
+                <el-icon>
+                  <Edit/>
+                </el-icon>
+              </el-button
+              >
+              <el-button
+                  type="danger"
+                  @click="handleDelete(scope.$index,scope.row)"
+              >
+                <el-icon>
+                  <Delete/>
+                </el-icon>
+              </el-button
+              >
+            </template>
+          </el-table-column>
+        </el-table>
+        <el-pagination
+            :current-page="currentPage"
+            :page-size="pageSize"
+            :total="total"
+            background
+            class="mt-4"
+            layout="prev, pager, next"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+        />
+      </div>
+      <div>
+        <el-dialog v-model="dialogVisible" title="Thêm Bộ Môn Giảng Dạy" width="80%">
+          <el-form ref="myForm" :model="form">
+            <el-form-item :label-width="formLabelWidth" label="Tên Bộ Môn">
+              <el-input v-model="form.name" autocomplete="off"/>
+            </el-form-item>
+          </el-form>
+          <template #footer>
+      <span class="dialog-footer">
+        <el-button type="danger" @click="dialogVisible = false">Thoát</el-button>
+        <el-button type="primary" @click="addSubject">
+          Thêm
+        </el-button>
+      </span>
+          </template>
+        </el-dialog>
+      </div>
+      <div>
+        <el-dialog v-model="editVisible" title="Sửa Bộ Môn Giảng Dạy" width="80%">
+          <el-form ref="myForm" :model="this.nameEdit">
+            <el-form-item :label-width="formLabelWidth" label="Tên Bộ Môn">
+              <el-input v-model="this.nameEdit" autocomplete="off"/>
+            </el-form-item>
+          </el-form>
+          <template #footer>
+      <span class="dialog-footer">
+        <el-button type="danger" @click="dialogVisible = false">Thoát</el-button>
+        <el-button type="primary" @click="EditSubject">
+          Sửa
+        </el-button>
+      </span>
+          </template>
+        </el-dialog>
+      </div>
+      <el-dialog
+          v-model="deleteVisible"
+          center
+          destroy-on-close
+          title="Cảnh Báo"
+          width="30%"
+      >
+    <span>
+      Bạn có muốn xóa {{ this.name }}
+    </span>
+        <div>
+          <strong>Dữ liệu sẽ không thể khôi phục</strong>
+        </div>
+        <template #footer>
+      <span class="dialog-footer">
+        <el-button type="primary" @click="deleteVisible = false">Không</el-button>
+        <el-button type="danger" @click="SubmitDelete">
+          Có
+        </el-button>
+      </span>
+        </template>
+      </el-dialog>
+    </div>
+
   </div>
 </template>
 
 <script>
-import TableClass from "@/components/TableData/TableClass.vue";
 import SubjectTeacherService from "@/api/SubjectTeacher";
-import AddFormClass from "@/components/AddForm/AddFormClass.vue";
-import AddFromSubjectTeacher from "@/components/AddForm/AddFromSubjectTeacher.vue";
 import SubjectTeacher from "@/api/SubjectTeacher";
-import SubjectService from "@/api/Subject";
+import {Check, Delete, Edit, Message, Search, Star,} from '@element-plus/icons-vue'
 
 export default {
   name: "QuanLyBoMon",
-  components: {AddFromSubjectTeacher,  TableClass},
+  components: {
+    Check,
+    Delete,
+    Edit,
+    Message,
+    Search,
+    Star,
+  },
   data() {
     return {
       listSubject: [],
       HeaderData: ["Số thứ tự", "Tên Bộ Môn", "Số lượng giáo viên"],
-      isShow:false,
-      subjectTeacher:[]
+      editVisible:false,
+      subjectTeacher: [],
+      dialogVisible: false,
+      formLabelWidth: '140px',
+      deleteVisible: false,
+      idEdit:'',
+      nameEdit:'',
+      idItem: '',
+      form: {
+        name: '',
+
+      },
+      name: '',
+      filterValue: '',
+      currentPage: 1,
+      pageSize: 6,
+      indexTem:0,
+      total:0
+
     }
   },
   created() {
     SubjectTeacherService.getAll().then(res => {
-      this.listSubject = res.data
-      console.log(this.listSubject)
+    this.total= res.data.length;
     })
-    SubjectTeacherService.getAllbyPage(1).then(res => {
-      console.log(res.data)
-      this.subjectTeacher = res.data
-    })
+    this.getData()
   },
-  watch:{
-    isShow:function (newValue){
-      SubjectTeacherService.getAll().then(res => {
+
+  computed: {
+    filteredTableData() {
+      if (this.filterValue === '') {
+        return this.listSubject;
+      } else {
+        return this.listSubject.filter((item) => item.name === this.filterValue);
+      }
+    },
+    currentTableData() {
+      const startIndex = (this.currentPage - 1) * this.pageSize;
+      const endIndex = startIndex + this.pageSize;
+      return this.filteredTableData.slice(startIndex, endIndex);
+    },
+  },
+  methods: {
+    getData() {
+      console.log(this.currentPage )
+      SubjectTeacherService.getAllbyPage(this.currentPage).then(res => {
         this.listSubject = res.data
-        console.log(this.listSubject)
+        console.log(res.data)
       })
-    }
-  },
-  methods:{
-    closeToggle(){
+    },
+    handleEdit(index, row) {
+      this.editVisible = true,
+          this.nameEdit = row.name
+      this.idEdit= row.id
+      console.log(index, row.name)
+    },
+    EditSubject(data){
+      this.$refs.myForm.validate(valid => {
+        if (valid) {
+           SubjectTeacherService.edit(this.idEdit,{name:this.nameEdit}).then(() =>{
+            this.getData()
+            this.editVisible = false
+             this.$notify({
+               type: "success",
+               title: "Thành Công",
+               text: `Sửa bộ  môn thành công`,
+             });
+          })
+        } else {
+          console.log('Validation failed');
+          return false;
+        }
+      });
+    },
+    handleDelete(index, row) {
+      this.deleteVisible = true;
+      this.idItem = row.id
+      this.name = row.name;
+    },
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.currentPage = 1;
+      this.getData();
+    },
+    handleCurrentChange(val) {
+      console.log(val)
+      this.currentPage = val;
+      this.getData();
+    },
+    getRowKey(row) {
+      return row.name;
+    },
+    SubmitDelete(){
+      SubjectTeacherService.delete(this.idItem).then(() =>{
+        this.getData()
+        this.deleteVisible = false
+      })
+
+    },
+
+    closeToggle() {
       this.isShow = false
     },
-    addSubject(data){
-     SubjectTeacherService.create(data).then(res => {
-       this.$notify({
-         type: "success",
-         title: "Thành Công",
-         text: `Tạo bộ môn thành công`,
-       });
-       this.isShow = false
-     })
-    },
-    onClickHandler(page){
-
-
-        SubjectTeacher.getAllbyPage(page).then(
-            response =>{
-              this.subjectTeacher = response.data
-            }
-
-        )
-        // SubjectTeacher.filterSubjectbyPage(page,this.khoi).then(
-        //     response => this.subject = response.data
-        // )
-
+    addSubject(data) {
+      this.$refs.myForm.validate(valid => {
+        if (valid) {
+          SubjectTeacherService.create(this.form).then(res => {
+            this.$notify({
+              type: "success",
+              title: "Thành Công",
+              text: `Tạo bộ môn thành công`,
+            });
+            this.dialogVisible = false
+            this.getData()
+          })
+        } else {
+          console.log('Validation failed');
+          return false;
+        }
+      });
 
     },
   }
 }
 </script>
 
-<style scoped>
+<style>
+.el-pagination__jump {
+  display: none;
+}
 
+.el-table td,
+.el-table th {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
 </style>

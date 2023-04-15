@@ -8,6 +8,28 @@ class UserService {
     getAll() {
         return axios.get(API_URL, { headers: authHeader() })
     }
+
+    getStudentFillters(page,query,className,sex) {
+        console.log(page,query,className,sex)
+        return axios.get(API_URL+'search/filter', {params:{
+                page: page,
+                query: query,
+                className:className,
+                sex:sex
+            },
+            headers:authHeader()
+        })
+    }
+    getTeacherFillters(page,query,subjectTeacherName,sex) {
+        return axios.get(API_URL+'search/filter/teacher', {params:{
+                page: page,
+                query: query,
+                subjectTeacherName:subjectTeacherName,
+                sex:sex
+            },
+            headers:authHeader()
+        })
+    }
     getUser(username) {
         console.log('auth', authHeader())
         return axios.get(API_URL + `username/${username.data}`, { headers: authHeader() });
@@ -22,7 +44,6 @@ class UserService {
         }, { headers: fileHeader() }).then(response => {
             if (response) {
             }
-
             return response.data;
         })
     }
@@ -57,7 +78,7 @@ class UserService {
         return axios.get(API_URL+'role/student', { headers: authHeader() })
     }
     updateProfileUser(data){
-
+        console.log(data)
         return axios.put(API_URL + `upadate/profile/${data.userName}`, {
             userName: data.userName,
             fullName: data.fullName,
@@ -67,7 +88,7 @@ class UserService {
             sex : data.sex,
             Date: data.date,
             className: data.className,
-            hashedPassword:data.hashedPassword,
+            hashedPassword:data.password,
             subjectTeacherName:data.subjectTeacherName
 
         }, { headers: authHeader() });

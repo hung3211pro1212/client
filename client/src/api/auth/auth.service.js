@@ -19,17 +19,18 @@ class AuthService {
             });
     }
     signUpStudent(user) {
+        console.log()
         return axios
             .post(API_URL + 'signup/student', {
-                userName: user.username,
+                userName: user.userName,
                 password: user.password,
                 fullName: user.fullName,
                 sex: user.sex,
                 className: user.className,
                 numberPhone: user.numberPhone,
                 email: user.email,
-                Date: user.date,
-                Address: user.address
+                Date: user.Date,
+                Address: user.Address
             })
             .then(response => {
 
@@ -39,15 +40,15 @@ class AuthService {
     signUpTeacher(user) {
         return axios
             .post(API_URL + 'signup/teacher', {
-                userName: user.username,
+                userName: user.userName,
                 password: user.password,
                 fullName: user.fullName,
                 sex: user.sex,
-                subjectTeacherName: user.subjectTecher,
+                subjectTeacherName: user.subjectTeacherName,
                 numberPhone: user.numberPhone,
                 email: user.email,
-                Date: user.date,
-                Address: user.address
+                Date: user.Date,
+                Address: user.Address,
             })
             .then(response => {
 
