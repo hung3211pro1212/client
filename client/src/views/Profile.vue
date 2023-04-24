@@ -40,106 +40,125 @@
             <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
  
            <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
-                    <h4 class="text-xl text-gray-900 font-bold">{{this.user.fullName}}</h4>
-                    <ul class="mt-2 text-gray-700">
-                      <li class="flex border-b py-2 w-full">
-                            <span class="font-bold  w-44 text-left ">Mã Học Sinh:</span>
-                            <span class="text-gray-700">{{this.user.userName}}</span>
-                        </li>
-                        <li class="flex border-y py-2 w-full">
-                            <span class="font-bold  w-44 text-left ">Email:</span>
-                            <span class="text-gray-700">{{this.user.email}}</span>
-                        </li>
+                    <h4 class="text-xl text-gray-900 font-bold">{{
+    this.user.fullName
+  }}</h4>
+                      <ul class="mt-2 text-gray-700">
                         <li class="flex border-b py-2 w-full">
-                            <span class="font-bold w-44 text-left ">Giới tính:</span>
-                            <span class="text-gray-700">{{this.user.sex}}</span>
-                        </li>
-                        <li class="flex border-b py-2 w-60 text-left w-full">
-                            <span class="font-bold w-24">Ngày sinh:</span>
-                            <span class="text-gray-700">{{this.user.date}}</span>
-                        </li>
-                        <li class="flex border-b py-2 w-60 text-left w-full">
-                            <span class="font-bold w-24">Địa chỉ:</span>
-                            <span class="text-gray-700">{{user.Address}}</span>
-                        </li>
-                        <li class="flex border-b py-2 w-60 text-left w-full">
-                            <span class="font-bold w-44">Số điện thoại:</span>
-                            <span class="text-gray-700">{{this.user.numberPhone}}</span>
-                        </li>
-                        <li class="flex border-b py-2 w-60 text-left w-full">
-                            <span class="font-bold w-44">Lớp:</span>
-                            <span class="text-gray-700">{{this.user.className}}</span>
-                        </li>
-                         
-                    </ul>
-                </div>
-          </div>
-          
-        </div>
-        <div class="mt-10 py-10 border-t border-blueGray-200 text-center">
-          <div class="flex flex-wrap justify-center">
-            <div class="w-full lg:w-9/12 px-4">
+                              <span class="font-bold  w-44 text-left ">Mã Học Sinh:</span>
+                              <span class="text-gray-700">{{
+    this.user.userName
+  }}</span>
+                          </li>
+                          <li class="flex border-y py-2 w-full">
+                              <span class="font-bold  w-44 text-left ">Email:</span>
+                              <span class="text-gray-700">{{
+    this.user.email
+  }}</span>
+                          </li>
+                          <li class="flex border-b py-2 w-full">
+                              <span class="font-bold w-44 text-left ">Giới tính:</span>
+                              <span class="text-gray-700">{{
+    this.user.sex
+  }}</span>
+                          </li>
+                          <li class="flex border-b py-2 w-60 text-left w-full">
+                              <span class="font-bold w-24">Ngày sinh:</span>
+                              <span class="text-gray-700">{{
+    this.user.date
+  }}</span>
+                          </li>
+                          <li class="flex border-b py-2 w-60 text-left w-full">
+                              <span class="font-bold w-24">Địa chỉ:</span>
+                              <span class="text-gray-700">{{
+    user.Address
+  }}</span>
+                          </li>
+                          <li class="flex border-b py-2 w-60 text-left w-full">
+                              <span class="font-bold w-44">Số điện thoại:</span>
+                              <span class="text-gray-700">{{
+    this.user.numberPhone
+  }}</span>
+                          </li>
+                          <li class="flex border-b py-2 w-60 text-left w-full">
+                              <span class="font-bold w-44">Lớp:</span>
+                              <span class="text-gray-700">{{
+    this.user.className
+  }}</span>
+                          </li>
+
+                      </ul>
+                  </div>
             </div>
+
           </div>
-          <div>
+          <div class="mt-10 py-10 border-t border-blueGray-200 text-center">
+            <div class="flex flex-wrap justify-center">
+              <div class="w-full lg:w-9/12 px-4">
+              </div>
+            </div>
+            <div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div>
-    <FromChangePassword @close="closeToggle" :isShow="this.isShow" :userName="this.$store.state.auth.user"/>
-  </div>
+    <div>
+      <FromChangePassword @close="closeToggle" :isShow="this.isShow" :userName="this.$store.state.auth.user"/>
+    </div>
+
+
+
 
 </template>
 <script>
 import userService from '../api/auth/user.service';
 import FromChangePassword from '../components/FormChangePassword.vue';
-export default {
-  name: 'ProFile',
-  components: {
-    FromChangePassword,
-  },
-  data() {
-    return {
-      isShow: false,
-      user: [],
-      fileInput: null
-    }
-  },
 
-  computed: {
-  },
-  methods: {
-    closeToggle() {
-      this.isShow = false
+export default {
+    name: 'ProFile',
+    components: {
+        FromChangePassword,
+    },
+    data() {
+        return {
+            isShow: false,
+            user: [],
+            fileInput: null
+        }
     },
 
-    onUpLoad() {
-      console.log(this.$refs.fileInput.value)
-      console.log()
-      const fd = new FormData()
-      fd.append('file', this.$refs.fileInput.files[0])
-      console.log(fd.getAll('file'))
-      // userService.updateAvatar(this.$store.state.auth.user, this.$refs.fileInput.files[0])
+    computed: {},
+    methods: {
+        closeToggle() {
+            this.isShow = false
+        },
+
+        onUpLoad() {
+            console.log(this.$refs.fileInput.value)
+            console.log()
+            const fd = new FormData()
+            fd.append('file', this.$refs.fileInput.files[0])
+            console.log(fd.getAll('file'))
+            // userService.updateAvatar(this.$store.state.auth.user, this.$refs.fileInput.files[0])
+        }
+    },
+    mounted() {
+        userService.getUser(this.$store.state.auth.user).then(
+            res => {
+                this.user = res.data.user
+                console.log(this.user);
+                localStorage.setItem('subjectTeacherName', this.user.subjectTeacherName)
+
+            }, error => {
+                this.user =
+                    (error.res && error.res.data) ||
+                    error.message ||
+                    error.toString();
+            }
+        )
 
     }
-  },
-  mounted() {
-    userService.getUser(this.$store.state.auth.user).then(
-      res => {
-        this.user = res.data.user
-        console.log(this.user);
-
-      }, error => {
-        this.user =
-          (error.res && error.res.data) ||
-          error.message ||
-          error.toString();
-      }
-    )
-
-  }
 };
 </script>
 <style lang=""></style>

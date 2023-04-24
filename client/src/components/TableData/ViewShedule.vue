@@ -17,7 +17,7 @@
           <td v-for="( itemDate,indexDay) in dataDay" :key="indexDay"
               class="  border-r border-r-green-300 text-center  font-medium text-base py-5 px-2  border-b border-b-green-300">
             <div v-for="(item,index) in shedule ">
-              <div v-if=" item.time == i && item.nameDate == itemDate">{{ item.subjectName }}</div>
+              <div v-if=" item.time == i && item.nameDate == itemDate">{{ item.className }}</div>
             </div>
           </td>
         </tr>
