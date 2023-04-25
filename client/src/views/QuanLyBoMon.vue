@@ -8,6 +8,12 @@
             <div class="bg-white p-4 ">
                 <div class="flex justify-between">
                     <h1>Danh Sách Bộ Môn</h1>
+                    <el-button type="primary" @click="dialogVisible = true">
+                        <el-icon>
+                            <Plus/>
+                        </el-icon>
+                        Thêm Bộ Môn
+                    </el-button>
                 </div>
 
                 <el-table :data="this.listSubject" :row-key="getRowKey" border caption="Table Title"
@@ -73,7 +79,7 @@
                     </el-form>
                     <template #footer>
       <span class="dialog-footer">
-        <el-button type="danger" @click="dialogVisible = false">Thoát</el-button>
+        <el-button type="danger" @click="editVisible = false">Thoát</el-button>
         <el-button type="primary" @click="EditSubject">
           Sửa
         </el-button>

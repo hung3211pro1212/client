@@ -22,8 +22,13 @@
                 <h2> Lọc Theo Khối</h2>
                 <el-select v-model="filterValue" placeholder="Chọn Khối">
                     <el-option label="Tất cả" value=""></el-option>
-                    <el-option v-for="type in this.listKhoi" :key="type.value" :label="type.label"
-                               :value="type.value"></el-option>
+                    <!--                  /  <el-option v-for="type in this.listKhoi" :key="type.value" :label="type.label"-->
+                    <!--                               :value="type.value"><el-option>-->
+                    <el-option label="6" value="6"></el-option>
+                    <el-option label="7" value="7"></el-option>
+                    <el-option label="8" value="8"></el-option>
+                    <el-option label="9" value="9"></el-option>
+
                 </el-select>
                 <el-table :data="this.listClass" border caption="Table Title"
                           class-name="mt-4" style="width: 100%;border-collapse: collapse;">

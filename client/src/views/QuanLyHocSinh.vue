@@ -92,6 +92,12 @@ export default {
                 ],
                 numberPhone: [
                     {required: true, message: 'Số điện thoại không được bỏ trống', trigger: 'blur'},
+                    {
+                        min: 10,
+                        max: 13,
+                        message: 'Số điện Thoại không được ít hơn 10 sô và lớn hơn 13 số',
+                        trigger: 'blur'
+                    }
 
                 ],
                 Address: [

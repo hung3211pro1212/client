@@ -131,7 +131,7 @@
                     <template #dropdown>
                         <el-dropdown-menu>
                             <el-dropdown-item>Thông Tin Tài Khoản</el-dropdown-item>
-                            <el-dropdown-item>Cài đặt</el-dropdown-item>
+                           
                             <el-dropdown-item @click="logOut">Đăng Xuất</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>

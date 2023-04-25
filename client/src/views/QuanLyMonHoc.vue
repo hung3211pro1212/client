@@ -50,7 +50,11 @@
                 <el-dialog v-model="dialogVisible" title="Thêm Lớp Học" width="80%">
                     <el-form ref="form" :model="form" :rules="rules">
                         <el-form-item label="Tên môn học" prop="name">
-                            <el-input v-model="form.name" autocomplete="off"/>
+                            <el-select v-model="form.name" placeholder="Chọn Lớp học">
+                                <el-option v-for="type in this.subjectTeacher" :key="type.value" :label="type.label"
+                                           :value="type.value"></el-option>
+                            </el-select>
+
                         </el-form-item>
                         <el-form-item label="Khối" prop="Khoi">
                             <el-select v-model="form.Khoi" placeholder="Chọn Khôi">
@@ -78,7 +82,11 @@
                 <el-dialog v-model="editVisible" title="Sửa Lớp Học" width="80%">
                     <el-form ref="myForm" :model="formEdit">
                         <el-form-item label="Lớp Học" required>
-                            <el-input v-model="formEdit.name" autocomplete="off" required/>
+                            <!--                            <el-input v-model="" autocomplete="off" required/>-->
+                            <el-select v-model="formEdit.name" placeholder="Chọn Lớp học">
+                                <el-option v-for="type in this.subjectTeacher" :key="type.value" :label="type.label"
+                                           :value="type.value"></el-option>
+                            </el-select>
                         </el-form-item>
                         <el-form-item label="Khối" prop="Khoi">
                             <el-select v-model="formEdit.Khoi" placeholder="Chọn Khôi">
@@ -123,6 +131,7 @@
 
 import SubjectService from "@/api/Subject";
 import AuthService from "@/api/auth/auth.service";
+import SubjectTeacherService from "@/api/SubjectTeacher"
 
 export default {
     name: "QuanLyMonHoc",
@@ -135,6 +144,7 @@ export default {
             editVisible: false,
             listKhoi: [],
             subject: [],
+            subjectTeacher: [],
             isEditor: false,
             name: '',
             form: {
@@ -148,7 +158,7 @@ export default {
             },
             rules: {
                 name: [
-                    {required: true, message: ' Tên môn học không được để trống', trigger: 'blur'},
+                    {required: true, message: ' Tên môn học không được để trống', trigger: 'change'},
                 ],
                 Khoi: [
                     {required: true, message: 'Khối học chưa được chọn', trigger: 'change'},
@@ -178,15 +188,24 @@ export default {
                 console.log(this.listSubject)
             })
         },
+        getAllSubject() {
+            SubjectTeacherService.getAll().then((result) => {
+                this.subjectTeacher = result.data.map(({id, name}) => ({label: name, value: name}));
+            })
+        },
+
         getValueByPage() {
             SubjectService.getAllSubjectsbyKhoi(this.filterValue).then(result => {
                 this.listSubject = result.data;
             })
         },
         submitForm(formName) {
+
             this.$refs[formName].validate((valid) => {
                 if (valid) {
+                    this.form.name = this.form.name + ' ' + this.form.Khoi
                     SubjectService.createSubject(this.form).then(result => {
+                        console.log(this.form)
                         this.dialogVisible = false;
                         this.getAllValue();
                         this.getValueByPage();
@@ -230,7 +249,7 @@ export default {
         }
     },
     created() {
-
+        this.getAllSubject()
     }
 
 }
